@@ -1,7 +1,6 @@
-const STORAGE_KEY = 'visiter:tags';
-const THEME_KEY = 'visiter:theme';
-
 (function(){
+  const STORAGE_KEY = 'visiter:tags';
+  const THEME_KEY = 'visiter:theme';
   function loadTags(){
     try{
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -42,7 +41,6 @@ const THEME_KEY = 'visiter:theme';
     saveTags(tags2);
     return fallback;
   }
-
   const qs = sel => document.querySelector(sel);
   const qsa = sel => Array.from(document.querySelectorAll(sel));
   function escapeHtml(s){
@@ -51,7 +49,6 @@ const THEME_KEY = 'visiter:theme';
   function getTagListEl(){
     return document.getElementById('tagList') || document.getElementById('tagsList');
   }
-
   function renderTags(){
     const tagListEl = getTagListEl();
     const emptyStateEl = document.getElementById('emptyState') || document.getElementById('empty');
@@ -70,18 +67,14 @@ const THEME_KEY = 'visiter:theme';
       li.setAttribute('role','button');
       li.setAttribute('tabindex','0');
       li.dataset.tag = tag;
-
       const spanName = document.createElement('div');
       spanName.className = 'tag-name';
       spanName.textContent = tag;
-
       const spanMeta = document.createElement('div');
       spanMeta.className = 'tag-meta';
       spanMeta.textContent = 'Aller au dashboard →';
-
       li.appendChild(spanName);
       li.appendChild(spanMeta);
-
       li.addEventListener('click', ()=>{
         const url = new URL(window.location.href);
         const base = url.origin + (url.pathname.replace(/\/[^/]*$/,'/') || '/');
@@ -134,21 +127,17 @@ const THEME_KEY = 'visiter:theme';
         wrapper.style.justifyContent = 'space-between';
         wrapper.style.alignItems = 'center';
         wrapper.style.gap = '12px';
-
         const left = document.createElement('div');
         left.appendChild(spanName);
         left.appendChild(spanMeta);
         wrapper.appendChild(left);
         wrapper.appendChild(protoContainer);
-
-        li.innerHTML = ''; // replace default
+        li.innerHTML = '';
         li.appendChild(wrapper);
       }
-
       tagListEl.appendChild(li);
     });
   }
-
   function highlightTag(tag){
     setTimeout(()=>{
       const items = Array.from(document.querySelectorAll('.tag-item'));
@@ -160,7 +149,6 @@ const THEME_KEY = 'visiter:theme';
       }
     },50);
   }
-
   const modalEl = document.getElementById('modal');
   const openModalBtn = document.getElementById('openModal');
   const closeModalBtn = document.getElementById('closeModal');
@@ -172,7 +160,6 @@ const THEME_KEY = 'visiter:theme';
   const codeIdEl = document.getElementById('codeId');
   const codeHeadEl = document.getElementById('codeHead');
   const exampleTagEl = document.getElementById('exampleTag');
-
   function openModal(){
     if(!modalEl) return;
     modalEl.setAttribute('aria-hidden','false');
@@ -194,12 +181,10 @@ const THEME_KEY = 'visiter:theme';
     if(exampleTagEl) exampleTagEl.innerHTML = escapeHtml(`<div class="visiter-tag" data-tag="${escapeHtml(tag)}" data-name="${escapeHtml(tag)}"></div>`);
     if(resultBox) resultBox.hidden = false;
   }
-
   if(openModalBtn) openModalBtn.addEventListener('click', openModal);
   if(closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
   if(backdropEl) backdropEl.addEventListener('click', closeModal);
   if(cancelBtn) cancelBtn.addEventListener('click', closeModal);
-
   if(createForm){
     createForm.addEventListener('submit', function(ev){
       ev.preventDefault();
@@ -207,7 +192,6 @@ const THEME_KEY = 'visiter:theme';
       const id = createUniqueTag();
       renderTags();
       highlightTag(id);
-
       if(codeIdEl) codeIdEl.textContent = id;
       const headSnippet = `<script async src="https://cdn.visiter.example/widget.js" data-visiter-tag="${escapeHtml(id)}" data-visiter-name="${escapeHtml(name)}"></script>`;
       if(codeHeadEl) codeHeadEl.innerHTML = escapeHtml(headSnippet);
@@ -216,7 +200,6 @@ const THEME_KEY = 'visiter:theme';
       if(resultBox) resultBox.hidden = false;
     });
   }
-
   function copyToClipboard(text, btn){
     if(!text) return;
     navigator.clipboard?.writeText(text).then(()=>{
@@ -236,7 +219,6 @@ const THEME_KEY = 'visiter:theme';
       setTimeout(()=> { if(btn) btn.textContent = 'Copier'; }, 1400);
     });
   }
-
   document.addEventListener('click', function(e){
     const btn = e.target.closest('.btn-copy');
     if(!btn) return;
@@ -256,26 +238,6 @@ const THEME_KEY = 'visiter:theme';
       copyToClipboard(btn.textContent, btn);
     }
   });
-
-  function initDashboardPage(){
-    const params = new URLSearchParams(window.location.search);
-    const tag = params.get('tag') || '';
-    const name = params.get('name') || '';
-    const tagParamEl = document.getElementById('tagParam');
-    const tagNameEl = document.getElementById('tagNameDisplay') || document.getElementById('tagName');
-    if(tagParamEl) tagParamEl.textContent = tag || '(vide)';
-    if(tagNameEl) tagNameEl.textContent = name || '(vide)';
-    const mapEl = document.getElementById('map');
-    if(!mapEl) return;
-    const map = L.map('map', {center:[20,0], zoom:2, attributionControl:false});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
-    const marker = L.circleMarker([20,0],{radius:8, color:'#1db954', fillColor:'#1db954', fillOpacity:0.24}).addTo(map);
-    map.on('click', e=>{
-      marker.setLatLng(e.latlng);
-      map.panTo(e.latlng);
-    });
-  }
-
   function applyTheme(theme){
     if(theme === 'light'){
       document.body.classList.add('light-theme');
@@ -295,7 +257,6 @@ const THEME_KEY = 'visiter:theme';
     applyTheme(saved);
     if(btn) btn.addEventListener('click', toggleTheme);
   }
-
   function initTagsPage(){
     const newTagBtn = document.getElementById('newTagBtn');
     renderTags();
@@ -308,18 +269,14 @@ const THEME_KEY = 'visiter:theme';
     }
     if(openModalBtn) openModalBtn.addEventListener('click', openModal);
   }
-
   document.addEventListener('DOMContentLoaded', ()=>{
     initTheme();
     if(getTagListEl()) initTagsPage();
-    if(document.getElementById('map')) initDashboardPage();
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' && modalEl && modalEl.getAttribute('aria-hidden') === 'false') closeModal();
     });
   });
-
   window.__visiter = {
     loadTags, saveTags, createUniqueTag, renderTags, openModal, closeModal
   };
-
 })();
