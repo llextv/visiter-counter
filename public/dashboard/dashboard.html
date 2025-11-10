@@ -36,14 +36,26 @@
     </div>
 
     <div class="stats">
-      <div class="stat-card">
+      <div class="stat-card-no-grow">
         <div class="stat-title">Pages trackées</div>
         <div class="stat-value" id="pages-count">42</div>
       </div>
+
       <div class="stat-card">
-        <div class="stat-title">Visiteurs aujourd'hui</div>
+        <div class="stat-title">
+          Visiteurs aujourd'hui
+          <div class="period-wrapper">
+            <button id="periodButton" class="period-btn" aria-haspopup="true" aria-controls="periodList" aria-expanded="false">Aujourd'hui ▾</button>
+            <ul id="periodList" class="period-list" role="menu" aria-labelledby="periodButton" hidden>
+              <li role="menuitem" tabindex="0" data-period="today" aria-current="true">Aujourd'hui</li>
+              <li role="menuitem" tabindex="0" data-period="month">Ce mois-ci</li>
+              <li role="menuitem" tabindex="0" data-period="year">Cette année</li>
+            </ul>
+          </div>
+        </div>
         <div class="stat-value" id="today-visitors">128</div>
       </div>
+
       <div class="stat-card">
         <div class="stat-title">Visiteurs totaux</div>
         <div class="stat-value" id="total-visitors">9583</div>

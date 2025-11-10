@@ -112,6 +112,16 @@ main {
   text-align: center;
   transition: all 0.3s ease;
 }
+
+.stat-card-no-grow {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
 .stat-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 15px 25px rgba(0,0,0,0.45);
@@ -120,6 +130,10 @@ main {
   font-size: 17px;
   opacity: 0.85;
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 .stat-value {
   font-size: 32px;
@@ -243,6 +257,47 @@ body.light-theme .stat-value {
   font-weight: 700;
   font-size: 16px;
   color: #1db954;
+}
+.period-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.period-btn {
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: inherit;
+  cursor: pointer;
+}
+.period-list {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 150px;
+  background: #13171b;
+  border-radius: 8px;
+  padding: 6px;
+  list-style: none;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  z-index: 20;
+}
+.period-list[hidden] {
+  display: none;
+}
+.period-list li {
+  padding: 8px 10px;
+  border-radius: 6px;
+  color: #e6eef6;
+  cursor: pointer;
+  font-size: 13px;
+}
+.period-list li[aria-current="true"], .period-list li:hover, .period-list li:focus {
+  background: linear-gradient(90deg,#1f2427,#15181b);
+  color: #e6eef6;
+  outline: none;
 }
 @media (max-width: 720px){
   .map-container { height: 320px; }
